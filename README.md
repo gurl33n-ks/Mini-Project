@@ -1,2 +1,2 @@
 # Mini-Project
-Mini-project SE-E3
+Mini-project SE-E2
