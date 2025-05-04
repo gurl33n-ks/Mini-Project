@@ -1,14 +1,20 @@
--- Create the university_network database if it doesn't exist
-CREATE DATABASE university_network;
-
--- Use the university_network database
+CREATE DATABASE IF NOT EXISTS university_network;
 USE university_network;
 
--- Users table creation
-CREATE TABLE users (
+CREATE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'club_head', 'user') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE login (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
