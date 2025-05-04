@@ -16,13 +16,31 @@ cursor = conn.cursor()
 def is_valid_email(email):
     return re.match(r"^[\w\.-]+@dypatil\.edu$", email)
 
+# Helper: Check if Password is Valid
+def is_valid_password(password):
+    # At least 8 characters, one uppercase, one lowercase, one special character
+    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$'
+    return re.match(pattern, password)
+
 # Register User
 def register_user():
     email = input("Enter email (@dypatil.edu): ")
     if not is_valid_email(email):
         print("Invalid email domain. Only @dypatil.edu allowed.")
         return
+
     password = getpass("Enter password: ")
+    confirm = getpass("Confirm password: ")
+
+    if password != confirm:
+        print("Passwords do not match.")
+        return
+
+    # Validate password
+    if not is_valid_password(password):
+        print("Password must be at least 8 characters long, include uppercase, lowercase, and a special character.")
+        return
+
     role = input("Enter role (admin, club_head, user): ")
 
     cursor.execute("INSERT INTO users (email, password, role) VALUES (%s, %s, %s)", (email, password, role))
