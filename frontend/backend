@@ -1,0 +1,107 @@
+import mysql.connector
+from getpass import getpass
+import re
+
+# Connect to MySQL
+conn = mysql.connector.connect(
+    host="192.168.1.50",
+    user="root",
+    password="Icedcoffee@1234",
+    database="university_network"
+)
+
+cursor = conn.cursor()
+
+# Helper: Check Email Domain
+def is_valid_email(email):
+    return re.match(r"^[\w\.-]+@dypatil\.edu$", email)
+
+# Helper: Check if Password is Valid
+def is_valid_password(password):
+    # At least 8 characters, one uppercase, one lowercase, one special character
+    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$'
+    return re.match(pattern, password)
+
+# Register User
+def register_user():
+    email = input("Enter email (@dypatil.edu): ")
+    if not is_valid_email(email):
+        print("Invalid email domain. Only @dypatil.edu allowed.")
+        return
+
+    password = getpass("Enter password: ")
+    confirm = getpass("Confirm password: ")
+
+    if password != confirm:
+        print("Passwords do not match.")
+        return
+
+    # Validate password
+    if not is_valid_password(password):
+        print("Password must be at least 8 characters long, include uppercase, lowercase, and a special character.")
+        return
+
+    role = input("Enter role (admin, club_head, user): ")
+
+    cursor.execute("INSERT INTO users (email, password, role) VALUES (%s, %s, %s)", (email, password, role))
+    conn.commit()
+    print("User registered successfully.")
+
+# Login Function
+def login():
+    email = input("Enter email: ")
+    password = getpass("Enter password: ")
+
+    cursor.execute("SELECT id, role FROM users WHERE email=%s AND password=%s", (email, password))
+    result = cursor.fetchone()
+    if result:
+        print(f"Login successful. Role: {result[1]}")
+        return {"id": result[0], "role": result[1]}
+    else:
+        print("Login failed.")
+        return None
+
+# Committee Function
+def add_or_update_committee(user):
+    if user["role"] not in ['admin', 'club_head']:
+        print("Unauthorized. Only admin or club heads can update.")
+        return
+
+    name = input("Enter committee name: ")
+    desc = input("Enter committee description: ")
+
+    cursor.execute("SELECT id FROM committees WHERE name=%s", (name,))
+    result = cursor.fetchone()
+
+    if result:
+        cursor.execute(
+            "UPDATE committees SET description=%s, updated_by=%s WHERE name=%s",
+            (desc, user["id"], name)
+        )
+        print("Committee updated.")
+    else:
+        cursor.execute(
+            "INSERT INTO committees (name, description, updated_by) VALUES (%s, %s, %s)",
+            (name, desc, user["id"])
+        )
+        print("Committee added.")
+
+    conn.commit()
+
+# App Entry Point
+if __name__ == "__main__":
+    print("1. Register")
+    print("2. Login and Manage Committees")
+    choice = input("Select option (1/2): ")
+
+    if choice == "1":
+        register_user()
+    elif choice == "2":
+        user = login()
+        if user:
+            add_or_update_committee(user)
+    else:
+        print("Invalid option.")
+
+cursor.close()
+conn.close()
