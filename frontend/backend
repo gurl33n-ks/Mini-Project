@@ -6,6 +6,7 @@ import re
 conn = mysql.connector.connect(
     host="local host",
     user="root",
+    Port=3306,
     password="Icedcoffee@1234",
     database="university_network"
 )
