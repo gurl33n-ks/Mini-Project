@@ -1,0 +1,16 @@
+# Ignore Mac system files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# MySQL dump files
+*.sql
+
+# VS Code settings (if you're using it)
+.vscode/
+
+# Environment variables or virtual environments
+.env
+venv/
