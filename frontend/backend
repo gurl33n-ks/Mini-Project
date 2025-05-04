@@ -4,7 +4,7 @@ import re
 
 # Connect to MySQL
 conn = mysql.connector.connect(
-    host="192.168.1.50",
+    host="local host",
     user="root",
     password="Icedcoffee@1234",
     database="university_network"
