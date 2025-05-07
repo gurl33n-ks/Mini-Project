@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Student Networking</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .background {
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 100vh;
+      padding: 80px 40px 40px 40px;
+    }
+
+    .content-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 0 auto 50px auto;
+      max-width: 900px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: red;
+      margin-bottom: 30px;
+      text-decoration: underline;
+    }
+
+    .circle-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .circle-buttons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: auto;
+      background-color: transparent;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .circle-buttons a img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .circle-buttons a:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+    }
+
+    /* Red Bubble Animation */
+    .bubble {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 0, 0, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pop 0.6s ease-out forwards;
+      z-index: 1000;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="logo.jpg" alt="logo" width="100px" />
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="background">
+    <div class="content-box">
+      <h1>About Us</h1>
+      <p>Welcome to the Student Networking site! This platform connects students, helping them share knowledge, collaborate on projects, and build their careers.</p>
+      <p>Our mission is to provide a space where students can grow, exchange ideas, and support one another in their academic and professional journey.</p>
+    </div>
+
+    <div class="section-heading">Clubs</div>
+    <div class="circle-buttons">
+      <a href="https://raitsuc.in/" target="_blank">
+        <img src="suc_logo.png" alt="SUC Logo" />
+      </a>
+      <a href="https://rait.acm.org/" target="_blank">
+        <img src="acm_logo.png" alt="ACM Logo" />
+      </a>
+      <a href="https://www.ecellrait.com/" target="_blank">
+        <img src="ecell_logo.png" alt="E-CELL Logo" />
+      </a>
+      <a href="https://www.linkedin.com/company/csirait/?originalSubdomain=in" target="_blank">
+        <img src="csi_logo.png" alt="CSI Logo" />
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Student Networking Site | <a href="contact.html">Contact Us</a></p>
+  </footer>
+
+  <script>
+    // Red Bubble Click Effect
+    document.addEventListener('click', function (e) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.style.left = `${e.pageX - 25}px`;
+      bubble.style.top = `${e.pageY - 25}px`;
+      document.body.appendChild(bubble);
+
+      setTimeout(() => {
+        bubble.remove();
+      }, 600);
+    });
+  </script>
+</body>
+</html>

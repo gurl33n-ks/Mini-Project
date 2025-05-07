@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - Student Networking</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    .modal-links a {
+      display: inline-block;
+      margin: 10px 10px 20px 0;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .modal-links a:hover {
+      background-color: #0056b3;
+    }
+
+    #eventInfo {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f1f1f1;
+      border-radius: 6px;
+    }
+
+    /* Upcoming Events Heading Styling */
+    .events-section h2 a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .events-section h2 a:hover {
+      text-decoration: underline;
+    }
+
+    /* Red Bubble Click Animation Styling */
+    .bubble {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 0, 0, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pop 0.6s ease-out forwards;
+      z-index: 1000;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="logo.jpg" alt="logo" width="100px" />
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <div class="background">
+    <div class="content-box">
+      <h1>Welcome to Student Networking</h1>
+      <p>Connect with students, collaborate on projects, and grow your network!</p>
+      <p>Our platform provides a space where students can share ideas, build relationships, and support each other in their academic and professional journey.</p>
+    </div>
+
+    <!-- Upcoming Events Section with clickable box -->
+    <div class="events-section">
+      <h2><a href="#" id="openModal">📅 Upcoming Events</a></h2>
+    </div>
+  </div>
+
+  <!-- Modal Box -->
+  <div id="eventsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>📅 Upcoming Events</h2>
+
+      <div class="modal-links">
+        <a href="#" onclick="showEventInfo('suc')">SUC</a>
+        <a href="#" onclick="showEventInfo('acm')">ACM</a>
+        <a href="#" onclick="showEventInfo('csi')">CSI</a>
+        <a href="#" onclick="showEventInfo('ecell')">ECell</a>
+      </div>
+
+      <div id="eventInfo">
+        <p>Click on a link above to see more details.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>© 2025 Student Networking Site | <a href="contact.html">Contact Us</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Modal Logic
+    const openModal = document.getElementById('openModal');
+    const modal = document.getElementById('eventsModal');
+    const closeModal = document.getElementById('closeModal');
+
+    openModal.onclick = () => modal.style.display = "block";
+    closeModal.onclick = () => modal.style.display = "none";
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function showEventInfo(org) {
+      const eventInfo = document.getElementById("eventInfo");
+      let content = "";
+
+      switch(org) {
+        case "suc":
+          content = "<h3>SUC Events</h3><p>Annual cultural fest with music, dance, and drama performances. Date: March 2025.</p>";
+          break;
+        case "acm":
+          content = "<h3>ACM Chapter</h3><p>Technical paper presentations and hackathons. Next: Coding Contest, Jan 2025.</p>";
+          break;
+        case "csi":
+          content = "<h3>CSI Student Branch</h3><p>Workshops on software engineering, cloud computing, and cybersecurity.</p>";
+          break;
+        case "ecell":
+          content = "<h3>Entrepreneurship Cell (ECell)</h3><p>Startup talks, pitch events, and innovation challenges.</p>";
+          break;
+        default:
+          content = "<p>No info available.</p>";
+      }
+
+      eventInfo.innerHTML = content;
+    }
+
+    // Red Bubble Click Effect
+    document.addEventListener('click', function (e) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.style.left = `${e.pageX - 25}px`;
+      bubble.style.top = `${e.pageY - 25}px`;
+      document.body.appendChild(bubble);
+
+      setTimeout(() => {
+        bubble.remove();
+      }, 600);
+    });
+  </script>
+</body>
+</html>
